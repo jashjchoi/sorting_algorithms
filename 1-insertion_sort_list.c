@@ -20,7 +20,7 @@ void insertion_sort_list(listint_t **list)
 		{
 			if (cur->n < cur->prev->n)
 			{
-				swap_int(cur, cur->prev);
+				swap_int(cur->prev, cur);
 				while ((*list)->prev)
 				{
 					*list = (*list)->prev;
@@ -36,11 +36,11 @@ void insertion_sort_list(listint_t **list)
 
 /**
 * swap_int - recursive function to swap 2 given nodes
-* @r: ptr to right node
 * @l: ptr to left node
+* @r: ptr to right node
 * Return: void
 */
-void swap_int(listint_t *r, listint_t *l)
+void swap_int(listint_t *l, listint_t *r)
 {
 	listint_t *tmp, *right = r, *left = l;
 
