@@ -6,35 +6,55 @@
 */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *tmp, *ptr;
+	listint_t *tmp, *cur;
 
-	if ((*list)->next == NULL || list == NULL || (*list) == NULL)
+	if (list == NULL || (*list) == NULL)
 		return;
 
-	ptr = *list;
-	tmp = *list;
+	tmp = (*list)->next;
 
-	while (ptr)
+	while (tmp)
 	{
-		ptr = ptr->next;
-		while (tmp->prev && (tmp->n < tmp->prev->n))
+		cur = tmp;
+		while (cur->prev)
 		{
-			tmp->prev->next = tmp->next;
-			if (tmp->next != NULL)
+			if (cur->n < cur->prev->n)
 			{
-				tmp->next->prev = tmp->prev;
+				swap_int(cur, cur->prev);
+				while ((*list)->prev)
+				{
+					*list = (*list)->prev;
+				}
+				print_list(*list);
+				continue;
 			}
-			tmp->next = tmp->prev;
-			tmp->prev = tmp->next->prev;
-			if (tmp->prev != NULL)
-			{
-				tmp->prev->next = tmp;
-			}
-			else
-				*list = tmp;
-			tmp->next->prev = tmp;
-			print_list(*list);
+			cur = cur->prev;
 		}
-		tmp = ptr;
+		tmp = tmp->next;
+	}
+}
+
+/**
+* swap_int - recursive function to swap 2 given nodes
+* @r: ptr to right node
+* @l: ptr to left node
+* Return: void
+*/
+void swap_int(listint_t *r, listint_t *l)
+{
+	listint_t *tmp, *right = r, *left = l;
+
+	tmp = left->prev;
+	left->prev = right;
+	left->next = right->next;
+	right->next = left;
+	right->prev = tmp;
+	if (left->next)
+	{
+		left->next->prev = left;
+	}
+	if (right->prev)
+	{
+		right->prev->next = right;
 	}
 }
